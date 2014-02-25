@@ -1,0 +1,51 @@
+ext {
+	springVersion = "4.0.2.RELEASE"
+}
+
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-snapshot" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC3")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'speed'
+    version =  '0.1.0'
+}
+
+eclipse {
+	project {
+		natures 'org.springsource.ide.eclipse.gradle.core.nature', 'org.eclipse.jdt.groovy.core.groovyNature'
+	}
+	classpath {
+		containers 'org.springsource.ide.eclipse.gradle.classpathcontainer', 'GROOVY_SUPPORT'
+	}
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-snapshot" }
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-web"
+	compile("org.springframework.boot:spring-boot-starter-jdbc")
+//	compile("org.springframework.boot:spring-boot-starter-actuator")
+	//compile("org.springframework.boot:spring-boot-starter-security")
+	compile "com.fasterxml.jackson.core:jackson-databind"
+	compile("mysql:mysql-connector-java:5.1.12")
+	compile 'org.apache.commons:commons-lang3:3.2.1'
+	testCompile("junit:junit")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
